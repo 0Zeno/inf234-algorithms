@@ -5,6 +5,10 @@ import java.util.List;
 public class SegmentedLeastSquares {
     public record Point(double x, double y) {}
 
+    /**
+     * Inputs: points and the fixed cost of adding a segment.
+     * Result: the minimum least-squares error plus segment cost.
+     */
     public static double solve(List<Point> points, double segmentCost) {
         throw new UnsupportedOperationException("TODO");
     }

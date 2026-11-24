@@ -5,6 +5,10 @@ import java.util.List;
 public class WeightedIntervalScheduling {
     public record Interval(int start, int end, int weight) {}
 
+    /**
+     * Input: intervals with start and end times and a weight.
+     * Result: the maximum total weight of mutually non-overlapping intervals.
+     */
     public static int solve(List<Interval> intervals) {
         throw new UnsupportedOperationException("TODO");
     }

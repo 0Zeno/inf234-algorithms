@@ -6,6 +6,10 @@ public class LatenessScheduling {
     public record Job(String name, int processingTime, int deadline) {}
     public record ScheduleEntry(String name, int start, int finish) {}
 
+    /**
+     * Input: jobs with processing times and deadlines.
+     * Result: an ordered schedule assigning each job a start and finish time.
+     */
     public static List<ScheduleEntry> solve(List<Job> jobs) {
         throw new UnsupportedOperationException("TODO");
     }

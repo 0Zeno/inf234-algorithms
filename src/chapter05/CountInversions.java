@@ -1,6 +1,10 @@
 package chapter05;
 
 public class CountInversions {
+    /**
+     * Input: an integer array.
+     * Result: the number of pairs i < j whose values satisfy values[i] > values[j].
+     */
     public static long solve(int[] values) {
         throw new UnsupportedOperationException("TODO");
     }

@@ -3,6 +3,10 @@ package chapter06;
 public class Knapsack {
     public record Item(int weight, int value) {}
 
+    /**
+     * Inputs: a maximum weight capacity and a list of items.
+     * Result: the maximum value achievable without exceeding the capacity.
+     */
     public static int solve(int capacity, Item[] items) {
         throw new UnsupportedOperationException("TODO");
     }

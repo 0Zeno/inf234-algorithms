@@ -5,6 +5,10 @@ import java.util.List;
 public class ClosestPair {
     public record Point(long x, long y) {}
 
+    /**
+     * Input: a list of points.
+     * Result: the Euclidean distance between the closest pair of points.
+     */
     public static double solve(List<Point> points) {
         throw new UnsupportedOperationException("TODO");
     }

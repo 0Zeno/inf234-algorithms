@@ -1,6 +1,10 @@
 package chapter06;
 
 public class SubsetSum {
+    /**
+     * Inputs: a list of integer values and a target sum.
+     * Result: true if some subset has exactly the target sum.
+     */
     public static boolean solve(int[] values, int target) {
         throw new UnsupportedOperationException("TODO");
     }

@@ -7,6 +7,10 @@ public class IntervalScheduling {
         public Interval { if (start >= end) throw new IllegalArgumentException(); }
     }
 
+    /**
+     * Input: a list of intervals with start and end times.
+     * Result: a maximum-size set of mutually non-overlapping intervals.
+     */
     public static List<Interval> solve(List<Interval> intervals) {
         throw new UnsupportedOperationException("TODO");
     }

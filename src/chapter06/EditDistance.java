@@ -1,6 +1,10 @@
 package chapter06;
 
 public class EditDistance {
+    /**
+     * Inputs: two strings.
+     * Result: the minimum insertions, deletions, and substitutions needed to transform one into the other.
+     */
     public static int solve(String first, String second) {
         throw new UnsupportedOperationException("TODO");
     }

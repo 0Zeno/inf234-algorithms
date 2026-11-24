@@ -5,6 +5,10 @@ import java.util.*;
 public class StableMatching {
     public record PersonPreferences(List<String> rank) {}
 
+    /**
+     * Inputs: preference maps for each proposer and receiver.
+     * Result: a stable one-to-one mapping from proposer names to receiver names.
+     */
     public static Map<String, String> solve(
             Map<String, PersonPreferences> proposers,
             Map<String, PersonPreferences> receivers) {

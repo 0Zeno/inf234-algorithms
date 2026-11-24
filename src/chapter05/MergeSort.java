@@ -3,6 +3,10 @@ package chapter05;
 import java.util.Arrays;
 
 public class MergeSort {
+    /**
+     * Input: an integer array.
+     * Result: the same array, sorted in ascending order in place.
+     */
     public static void solve(int[] values) {
         throw new UnsupportedOperationException("TODO");
     }

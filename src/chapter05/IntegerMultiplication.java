@@ -1,6 +1,10 @@
 package chapter05;
 
 public class IntegerMultiplication {
+    /**
+     * Inputs: two integers.
+     * Result: their product.
+     */
     public static long solve(long first, long second) {
         throw new UnsupportedOperationException("TODO");
     }

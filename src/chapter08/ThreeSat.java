@@ -5,6 +5,10 @@ import java.util.List;
 public class ThreeSat {
     public record CnfFormula(List<List<Integer>> clauses) {}
 
+    /**
+     * Input: a CNF formula whose clauses contain signed variable numbers.
+     * Result: true if there is a truth assignment that satisfies every clause.
+     */
     public static boolean solve(CnfFormula formula) {
         throw new UnsupportedOperationException("TODO");
     }
