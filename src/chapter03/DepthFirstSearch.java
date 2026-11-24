@@ -3,6 +3,8 @@ package chapter03;
 import java.util.*;
 import graph.Graph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class DepthFirstSearch {
     /**
      * Inputs: a graph and the vertex at which to start.
@@ -16,15 +18,23 @@ public class DepthFirstSearch {
         Graph<Integer> graph = undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
         List<Integer> result = solve(graph, 0);
         if (result.size() != 4 || new HashSet<>(result).size() != 4)
-            throw new AssertionError("DFS must visit every vertex once");
+            throw new AssertionError("DFS must visit every vertex once: expected 4 unique vertices, got " +
+                    result.size() + " vertices with " + new HashSet<>(result).size() + " unique");
         result = solve(graph, 2);
         if (result.size() != 4 || result.get(0) != 2 || new HashSet<>(result).size() != 4)
-            throw new AssertionError("DFS should visit every vertex once from the start vertex");
-        if (!solve(undirected(4, new int[][]{{0, 1}}), 0)
-                .equals(List.of(0, 1)))
-            throw new AssertionError("DFS should not visit disconnected vertices");
-        if (!solve(undirected(1, new int[][]{}), 0).equals(List.of(0)))
-            throw new AssertionError("DFS should visit a singleton graph");
+            throw new AssertionError("DFS should visit every vertex once from the start vertex: " +
+                    "expected size 4 and first vertex 2, got " + result);
+        assertEquals(List.of(0, 1),
+                solve(undirected(4, new int[][]{{0, 1}}), 0),
+                "DFS should not visit disconnected vertices");
+        assertEquals(List.of(0),
+                solve(undirected(1, new int[][]{}), 0),
+                "DFS should visit a singleton graph");
+
+        Graph<Integer> branching = undirected(5, new int[][]{
+                {0, 1}, {0, 2}, {1, 3}, {2, 4}});
+        assertEquals(List.of(0, 1, 3, 2, 4), solve(branching, 0),
+                "DFS must descend before visiting siblings");
     }
 
     private static Graph<Integer> undirected(int vertexCount, int[][] edges) {

@@ -2,6 +2,8 @@ package chapter08;
 
 import graph.Graph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class HamiltonianPath {
     /**
      * Input: an undirected graph.
@@ -12,14 +14,13 @@ public class HamiltonianPath {
     }
 
     public static void main(String[] args) {
-        if (!solve(undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}})))
-            throw new AssertionError("path graph should have a Hamiltonian path");
-        if (solve(undirected(4, new int[][]{{0, 1}, {2, 3}})))
-            throw new AssertionError("disconnected graph should not have a Hamiltonian path");
-        if (!solve(undirected(1, new int[][]{})))
-            throw new AssertionError("a single vertex has a Hamiltonian path");
-        if (!solve(undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}, {3, 0}})))
-            throw new AssertionError("a cycle contains a Hamiltonian path");
+        assertEquals(true, solve(undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}})),
+                "path graph");
+        assertEquals(false, solve(undirected(4, new int[][]{{0, 1}, {2, 3}})),
+                "disconnected graph");
+        assertEquals(true, solve(undirected(1, new int[][]{})), "single vertex");
+        assertEquals(true, solve(undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}, {3, 0}})),
+                "cycle graph");
     }
 
     private static Graph<Integer> undirected(int vertexCount, int[][] edges) {

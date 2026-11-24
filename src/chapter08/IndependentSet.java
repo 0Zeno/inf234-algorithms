@@ -2,6 +2,8 @@ package chapter08;
 
 import graph.Graph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class IndependentSet {
     /**
      * Inputs: an undirected graph and a requested set size.
@@ -14,12 +16,12 @@ public class IndependentSet {
 
     public static void main(String[] args) {
         Graph<Integer> path = undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
-        if (!solve(path, 2)) throw new AssertionError("path should have an independent set of size 2");
-        if (!solve(path, 0)) throw new AssertionError("empty set is always independent");
-        if (solve(path, 3)) throw new AssertionError("path does not have an independent set of size 3");
-        if (solve(path, 5)) throw new AssertionError("a set cannot be larger than the graph");
-        if (!solve(undirected(3, new int[][]{}), 3))
-            throw new AssertionError("edgeless graph has an independent set of every size");
+        assertEquals(true, solve(path, 2), "path independent set size 2");
+        assertEquals(true, solve(path, 0), "empty set");
+        assertEquals(false, solve(path, 3), "path independent set size 3");
+        assertEquals(false, solve(path, 5), "set larger than graph");
+        assertEquals(true, solve(undirected(3, new int[][]{}), 3),
+                "edgeless graph independent set");
     }
 
     private static Graph<Integer> undirected(int vertexCount, int[][] edges) {

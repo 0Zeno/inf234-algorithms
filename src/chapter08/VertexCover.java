@@ -2,6 +2,8 @@ package chapter08;
 
 import graph.Graph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class VertexCover {
     /**
      * Inputs: an undirected graph and a requested cover size.
@@ -13,13 +15,11 @@ public class VertexCover {
 
     public static void main(String[] args) {
         Graph<Integer> path = undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
-        if (!solve(path, 2)) throw new AssertionError("path should have a vertex cover of size 2");
-        if (solve(path, 1)) throw new AssertionError("one vertex cannot cover the whole path");
-        if (!solve(undirected(3, new int[][]{}), 0))
-            throw new AssertionError("empty graph has a zero-sized vertex cover");
-        if (!solve(undirected(2, new int[][]{{0, 1}}), 1))
-            throw new AssertionError("one endpoint covers a single edge");
-        if (solve(path, 5)) throw new AssertionError("a cover cannot be larger than the graph");
+        assertEquals(true, solve(path, 2), "path vertex cover size 2");
+        assertEquals(false, solve(path, 1), "path vertex cover size 1");
+        assertEquals(true, solve(undirected(3, new int[][]{}), 0), "edgeless vertex cover");
+        assertEquals(true, solve(undirected(2, new int[][]{{0, 1}}), 1), "single-edge vertex cover");
+        assertEquals(false, solve(path, 5), "cover larger than graph");
     }
 
     private static Graph<Integer> undirected(int vertexCount, int[][] edges) {

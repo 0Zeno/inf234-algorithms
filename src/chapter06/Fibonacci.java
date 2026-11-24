@@ -1,5 +1,7 @@
 package chapter06;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class Fibonacci {
     /**
      * Input: a non-negative index n.
@@ -18,15 +20,13 @@ public class Fibonacci {
     }
 
     public static void main(String[] args) {
-        if (solve(0) != 0 || solve(1) != 1)
-            throw new AssertionError("base Fibonacci values are incorrect");
-        if (solve(10) != 55)
-            throw new AssertionError("expected Fibonacci(10) to be 55");
-        if (solve(50) != 12586269025L)
-            throw new AssertionError("larger Fibonacci value is incorrect");
+        assertEquals(0L, solve(0), "Fibonacci(0)");
+        assertEquals(1L, solve(1), "Fibonacci(1)");
+        assertEquals(55L, solve(10), "Fibonacci(10)");
+        assertEquals(12586269025L, solve(50), "Fibonacci(50)");
         try {
             solve(-1);
-            throw new AssertionError("negative indexes should be rejected");
+            throw new AssertionError("negative index rejection: expected IllegalArgumentException, got no exception");
         } catch (IllegalArgumentException expected) {
             // Expected.
         }

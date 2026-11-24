@@ -3,6 +3,8 @@ package chapter03;
 import java.util.*;
 import graph.Graph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class BreadthFirstSearch {
     /**
      * Inputs: a graph and the vertex at which to start.
@@ -28,6 +30,6 @@ public class BreadthFirstSearch {
     }
 
     private static void equals(Object expected, Object actual) {
-        if (!Objects.equals(expected, actual)) throw new AssertionError("expected " + expected + ", got " + actual);
+        assertEquals(expected, actual, "breadth-first search order");
     }
 }

@@ -2,6 +2,8 @@ package chapter07;
 
 import graph.WeightedGraph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class MinimumCostMatching {
     /**
      * Inputs: a weighted bipartite graph and the number of vertices in its left partition.
@@ -15,11 +17,11 @@ public class MinimumCostMatching {
         int cost = solve(weightedBipartite(3, 3, new int[][]{
                 {0, 0, 1}, {0, 1, 9}, {1, 0, 2},
                 {1, 2, 3}, {2, 1, 4}, {2, 2, 1}}), 3);
-        if (cost != 6) throw new AssertionError("expected cost 6, got " + cost);
-        if (solve(weightedBipartite(1, 1, new int[][]{{0, 0, 8}}), 1) != 8)
-            throw new AssertionError("single-edge matching has the edge cost");
-        if (solve(weightedBipartite(2, 2, new int[][]{}), 2) != 0)
-            throw new AssertionError("no available matching should have zero cost");
+        assertEquals(6, cost, "minimum-cost matching");
+        assertEquals(8, solve(weightedBipartite(1, 1, new int[][]{{0, 0, 8}}), 1),
+                "single-edge matching");
+        assertEquals(0, solve(weightedBipartite(2, 2, new int[][]{}), 2),
+                "matching without edges");
     }
 
     private static WeightedGraph<Integer, Integer> weightedBipartite(

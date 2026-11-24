@@ -3,6 +3,8 @@ package chapter04;
 import java.util.*;
 import graph.WeightedGraph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class MinimumSpanningTree {
     public record Edge(int u, int v, int weight) {}
 
@@ -17,11 +19,11 @@ public class MinimumSpanningTree {
     public static void main(String[] args) {
         long weight = solve(weighted(4, new int[][]{
                 {0, 1, 1}, {0, 2, 4}, {1, 2, 2}, {1, 3, 5}, {2, 3, 3}}));
-        if (weight != 6) throw new AssertionError("expected MST weight 6, got " + weight);
-        if (solve(weighted(1, new int[][]{})) != 0) throw new AssertionError("one vertex has MST weight 0");
-        if (solve(weighted(3, new int[][]{{0, 1, -2}, {1, 2, 1}, {0, 2, 4}})) != -1)
-            throw new AssertionError("MST should handle negative edge weights");
-        if (solve(weighted(0, new int[][]{})) != 0) throw new AssertionError("empty graph has MST weight 0");
+        assertEquals(6L, weight, "main MST weight");
+        assertEquals(0L, solve(weighted(1, new int[][]{})), "one vertex has MST weight 0");
+        assertEquals(-1L, solve(weighted(3, new int[][]{{0, 1, -2}, {1, 2, 1}, {0, 2, 4}})),
+                "MST should handle negative edge weights");
+        assertEquals(0L, solve(weighted(0, new int[][]{})), "empty graph has MST weight 0");
     }
 
     private static WeightedGraph<Integer, Integer> weighted(int vertexCount, int[][] edges) {

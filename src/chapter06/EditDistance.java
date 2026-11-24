@@ -1,5 +1,7 @@
 package chapter06;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class EditDistance {
     /**
      * Inputs: two strings.
@@ -10,13 +12,10 @@ public class EditDistance {
     }
 
     public static void main(String[] args) {
-        if (solve("saturday", "sunday") != 3)
-            throw new AssertionError("expected edit distance 3");
-        if (solve("same", "same") != 0)
-            throw new AssertionError("equal strings have distance 0");
-        if (solve("", "abc") != 3 || solve("abc", "") != 3)
-            throw new AssertionError("empty-string distance is incorrect");
-        if (solve("kitten", "sitting") != 3)
-            throw new AssertionError("substitution distance is incorrect");
+        assertEquals(3, solve("saturday", "sunday"), "saturday-to-sunday edit distance");
+        assertEquals(0, solve("same", "same"), "equal strings have distance 0");
+        assertEquals(3, solve("", "abc"), "empty-to-abc edit distance");
+        assertEquals(3, solve("abc", ""), "abc-to-empty edit distance");
+        assertEquals(3, solve("kitten", "sitting"), "kitten-to-sitting edit distance");
     }
 }

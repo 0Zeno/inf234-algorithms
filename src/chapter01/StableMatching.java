@@ -2,6 +2,8 @@ package chapter01;
 
 import java.util.*;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class StableMatching {
     public record PersonPreferences(List<String> rank) {}
 
@@ -23,17 +25,14 @@ public class StableMatching {
                 "X", new PersonPreferences(List.of("A", "B")),
                 "Y", new PersonPreferences(List.of("B", "A")));
         Map<String, String> result = solve(men, women);
-        check(result != null && result.size() == 2, "a perfect matching is required");
-        check("X".equals(result.get("A")) && "Y".equals(result.get("B")),
-                "matching should respect the preferences in this example");
+        assertEquals(2, result == null ? -1 : result.size(), "perfect matching size");
+        assertEquals(Map.of("A", "X", "B", "Y"), result,
+                "matching should respect the preferences");
         result = solve(Map.of("A", new PersonPreferences(List.of("X"))),
                 Map.of("X", new PersonPreferences(List.of("A"))));
-        check(result.size() == 1 && "X".equals(result.get("A")),
-                "a one-person instance should match its only pair");
-        check(solve(Map.of(), Map.of()).isEmpty(), "empty instance should have an empty matching");
-    }
-
-    private static void check(boolean condition, String message) {
-        if (!condition) throw new AssertionError(message);
+        assertEquals(Map.of("A", "X"), result,
+                "one-person instance should match its only pair");
+        assertEquals(Map.of(), solve(Map.of(), Map.of()),
+                "empty instance should have an empty matching");
     }
 }

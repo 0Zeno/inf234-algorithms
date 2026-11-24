@@ -2,6 +2,8 @@ package chapter04;
 
 import java.util.*;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class IntervalScheduling {
     public record Interval(String name, int start, int end) {
         public Interval { if (start >= end) throw new IllegalArgumentException(); }
@@ -22,14 +24,14 @@ public class IntervalScheduling {
                 new Interval("E", 3, 9), new Interval("F", 8, 11),
                 new Interval("G", 12, 16));
         List<Interval> result = solve(input);
-        if (result.size() != 4) throw new AssertionError("expected 4 intervals, got " + result.size());
-        if (!solve(List.of()).isEmpty()) throw new AssertionError("empty input should produce no intervals");
+        assertEquals(4, result.size(), "main interval schedule size");
+        assertEquals(List.of(), solve(List.of()), "empty input should produce no intervals");
         result = solve(List.of(new Interval("A", 0, 1), new Interval("B", 1, 2),
                 new Interval("C", 2, 3)));
-        if (result.size() != 3) throw new AssertionError("touching intervals should be compatible");
+        assertEquals(3, result.size(), "touching intervals should be compatible");
         try {
             new Interval("invalid", 2, 2);
-            throw new AssertionError("zero-length intervals should be rejected");
+            throw new AssertionError("zero-length interval: expected IllegalArgumentException, got no exception");
         } catch (IllegalArgumentException expected) {
             // expected
         }

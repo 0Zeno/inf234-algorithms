@@ -3,6 +3,8 @@ package chapter07;
 import java.util.List;
 import graph.WeightedGraph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class MaximumFlow {
     /**
      * Inputs: a directed weighted network, a source vertex, and a sink vertex.
@@ -17,13 +19,10 @@ public class MaximumFlow {
                 {0, 1, 16}, {0, 2, 13}, {1, 2, 10}, {1, 3, 12},
                 {2, 1, 4}, {2, 4, 14}, {3, 2, 9}, {3, 5, 20},
                 {4, 3, 7}, {4, 5, 4}});
-        if (solve(n, 0, 5) != 23) throw new AssertionError("expected maximum flow 23");
-        if (solve(network(3, new long[][]{}), 0, 2) != 0)
-            throw new AssertionError("network without edges has zero flow");
-        if (solve(network(2, new long[][]{{0, 1, 7}}), 0, 1) != 7)
-            throw new AssertionError("single-edge flow is incorrect");
-        if (solve(network(2, new long[][]{{0, 1, 0}}), 0, 1) != 0)
-            throw new AssertionError("zero-capacity edges have zero flow");
+        assertEquals(23L, solve(n, 0, 5), "maximum flow");
+        assertEquals(0L, solve(network(3, new long[][]{}), 0, 2), "network without edges");
+        assertEquals(7L, solve(network(2, new long[][]{{0, 1, 7}}), 0, 1), "single-edge flow");
+        assertEquals(0L, solve(network(2, new long[][]{{0, 1, 0}}), 0, 1), "zero-capacity edge");
     }
 
     private static WeightedGraph<Integer, Long> network(int vertexCount, long[][] edges) {

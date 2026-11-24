@@ -1,5 +1,7 @@
 package chapter05;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class IntegerMultiplication {
     /**
      * Inputs: two integers.
@@ -10,11 +12,10 @@ public class IntegerMultiplication {
     }
 
     public static void main(String[] args) {
-        if (solve(3, 8) != 24) throw new AssertionError("wrong product");
-        if (solve(0, 12345) != 0) throw new AssertionError("zero product is incorrect");
-        if (solve(-7, 6) != -42) throw new AssertionError("negative product is incorrect");
-        if (solve(-9, -4) != 36) throw new AssertionError("double-negative product is incorrect");
-        if (solve(1, Long.MIN_VALUE) != Long.MIN_VALUE)
-            throw new AssertionError("multiplication by one is incorrect");
+        assertEquals(24L, solve(3, 8), "wrong product");
+        assertEquals(0L, solve(0, 12345), "zero product is incorrect");
+        assertEquals(-42L, solve(-7, 6), "negative product is incorrect");
+        assertEquals(36L, solve(-9, -4), "double-negative product is incorrect");
+        assertEquals(Long.MIN_VALUE, solve(1, Long.MIN_VALUE), "multiplication by one is incorrect");
     }
 }

@@ -1,5 +1,7 @@
 package chapter06;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class SubsetSum {
     /**
      * Inputs: a list of integer values and a target sum.
@@ -10,15 +12,11 @@ public class SubsetSum {
     }
 
     public static void main(String[] args) {
-        if (!solve(new int[]{3, 34, 4, 12, 5, 2}, 9))
-            throw new AssertionError("9 should be achievable");
-        if (solve(new int[]{3, 34, 4, 12, 5, 2}, 30))
-            throw new AssertionError("30 should not be achievable");
-        if (!solve(new int[]{1, 2, 3}, 0))
-            throw new AssertionError("zero should be achievable with the empty subset");
-        if (!solve(new int[]{}, 0) || solve(new int[]{}, 1))
-            throw new AssertionError("empty input should only achieve target zero");
-        if (solve(new int[]{2}, 4))
-            throw new AssertionError("an item may only be used once");
+        assertEquals(true, solve(new int[]{3, 34, 4, 12, 5, 2}, 9), "target 9");
+        assertEquals(false, solve(new int[]{3, 34, 4, 12, 5, 2}, 30), "target 30");
+        assertEquals(true, solve(new int[]{1, 2, 3}, 0), "empty subset for target 0");
+        assertEquals(true, solve(new int[]{}, 0), "empty input and target 0");
+        assertEquals(false, solve(new int[]{}, 1), "empty input and target 1");
+        assertEquals(false, solve(new int[]{2}, 4), "target 4 with a single item 2");
     }
 }

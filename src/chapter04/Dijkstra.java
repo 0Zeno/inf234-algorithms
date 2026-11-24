@@ -3,6 +3,8 @@ package chapter04;
 import java.util.*;
 import graph.WeightedGraph;
 
+import static testutil.TestAssertions.assertEquals;
+
 public class Dijkstra {
     public record Edge(int to, int weight) {}
     /**
@@ -19,18 +21,16 @@ public class Dijkstra {
         Map<Integer, Integer> d = solve(graph, 0);
         int[] expected = {0, 2, 3, 4, 7};
         for (int i = 0; i < expected.length; i++)
-            if (!Objects.equals(d.get(i), expected[i]))
-                throw new AssertionError("wrong distance to " + i);
+            assertEquals(expected[i], d.get(i), "Dijkstra distance to vertex " + i);
         WeightedGraph<Integer, Integer> disconnected = weighted(3, new int[][]{{0, 1, 4}});
         Map<Integer, Integer> disconnectedDistances = solve(disconnected, 0);
-        if (!Objects.equals(disconnectedDistances.get(1), 4))
-            throw new AssertionError("wrong distance on a sparse graph");
-        if (disconnectedDistances.containsKey(2))
-            throw new AssertionError("unreachable vertices should not have a distance");
-        if (!Objects.equals(solve(weighted(1, new int[][]{}), 0).get(0), 0))
-            throw new AssertionError("distance from a vertex to itself should be zero");
-        if (!Objects.equals(solve(weighted(3, new int[][]{{0, 1, 0}, {0, 2, 0}}), 0).get(1), 0))
-            throw new AssertionError("zero-weight edges should be supported");
+        assertEquals(4, disconnectedDistances.get(1), "Dijkstra distance on sparse graph");
+        assertEquals(false, disconnectedDistances.containsKey(2),
+                "unreachable vertex 2 should not have a distance");
+        assertEquals(0, solve(weighted(1, new int[][]{}), 0).get(0),
+                "distance from a vertex to itself");
+        assertEquals(0, solve(weighted(3, new int[][]{{0, 1, 0}, {0, 2, 0}}), 0).get(1),
+                "zero-weight edge");
     }
 
     private static WeightedGraph<Integer, Integer> weighted(int vertexCount, int[][] edges) {

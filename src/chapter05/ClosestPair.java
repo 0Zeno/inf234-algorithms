@@ -2,6 +2,10 @@ package chapter05;
 
 import java.util.List;
 
+import static testutil.TestAssertions.assertDoubleEquals;
+
+import static testutil.TestAssertions.assertDoubleEquals;
+
 public class ClosestPair {
     public record Point(long x, long y) {}
 
@@ -16,13 +20,9 @@ public class ClosestPair {
     public static void main(String[] args) {
         double d = solve(List.of(new Point(0, 0), new Point(2, 3),
                 new Point(6, 7), new Point(2, 1)));
-        if (Math.abs(d - Math.sqrt(5)) > 1e-9)
-            throw new AssertionError("wrong closest-pair distance");
-        if (solve(List.of(new Point(4, 4), new Point(4, 4))) != 0.0)
-            throw new AssertionError("duplicate points have distance zero");
-        if (Math.abs(solve(List.of(new Point(0, 0), new Point(3, 4))) - 5.0) > 1e-9)
-            throw new AssertionError("wrong distance for a two-point input");
-        if (Math.abs(solve(List.of(new Point(-3, -4), new Point(0, 0))) - 5.0) > 1e-9)
-            throw new AssertionError("negative coordinates should be supported");
+        assertDoubleEquals(Math.sqrt(5), d, "closest-pair distance");
+        assertDoubleEquals(0.0, solve(List.of(new Point(4, 4), new Point(4, 4))), "duplicate points");
+        assertDoubleEquals(5.0, solve(List.of(new Point(0, 0), new Point(3, 4))), "two-point distance");
+        assertDoubleEquals(5.0, solve(List.of(new Point(-3, -4), new Point(0, 0))), "negative-coordinate distance");
     }
 }
