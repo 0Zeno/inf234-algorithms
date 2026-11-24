@@ -1,9 +1,13 @@
 package chapter03;
 
-import java.util.*;
 import graph.Graph;
 
 import static testutil.TestAssertions.assertEquals;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 public class DepthFirstSearch {
     /**
@@ -11,11 +15,30 @@ public class DepthFirstSearch {
      * Result: vertices reachable from the start in depth-first discovery order.
      */
     public static List<Integer> solve(Graph<Integer> graph, int start) {
-        throw new UnsupportedOperationException("TODO");
+        Stack<Integer> stack = new Stack<>();
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> res = new ArrayList<>();
+
+
+        stack.add(start);
+        visited.add(start);
+
+        while (!stack.isEmpty()) {
+            Integer curr = stack.pop();
+            res.add(curr);
+
+            for (Integer v : graph.neighbours(curr)) {
+                if (visited.add(v)) {
+                    stack.add(v);
+                }
+            }
+        }
+
+        return res;
     }
 
     public static void main(String[] args) {
-        Graph<Integer> graph = undirected(4, new int[][]{{0, 1}, {1, 2}, {2, 3}});
+        Graph<Integer> graph = undirected(4, new int[][] { { 0, 1 }, { 1, 2 }, { 2, 3 } });
         List<Integer> result = solve(graph, 0);
         if (result.size() != 4 || new HashSet<>(result).size() != 4)
             throw new AssertionError("DFS must visit every vertex once: expected 4 unique vertices, got " +
@@ -39,8 +62,10 @@ public class DepthFirstSearch {
 
     private static Graph<Integer> undirected(int vertexCount, int[][] edges) {
         Graph<Integer> graph = new Graph<>(false);
-        for (int i = 0; i < vertexCount; i++) graph.addVertex(i);
-        for (int[] edge : edges) graph.addEdge(edge[0], edge[1]);
+        for (int i = 0; i < vertexCount; i++)
+            graph.addVertex(i);
+        for (int[] edge : edges)
+            graph.addEdge(edge[0], edge[1]);
         return graph;
     }
 }
