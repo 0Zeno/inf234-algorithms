@@ -22,6 +22,7 @@ public class Main {
         run("Chapter 6: 0/1 knapsack", chapter06.Knapsack.class);
         run("Chapter 6: Edit distance", chapter06.EditDistance.class);
         run("Chapter 6: Bellman-Ford", chapter06.BellmanFord.class);
+        run("Chapter 6: Fibonacci", chapter06.Fibonacci.class);
 
         run("Chapter 7: Maximum flow", chapter07.MaximumFlow.class);
         run("Chapter 7: Bipartite matching", chapter07.BipartiteMatching.class);
