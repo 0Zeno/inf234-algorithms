@@ -8,14 +8,22 @@ public class Fibonacci {
      * Result: the nth Fibonacci number, with F(0) = 0 and F(1) = 1.
      */
     public static long solve(int n) {
-        throw new UnsupportedOperationException("TODO");
+        if (n < 0) throw new IllegalArgumentException("index must be non-negative");
+        long previous = 0;
+        long current = 1;
+        for (int i = 0; i < n; i++) {
+            long next = previous + current;
+            previous = current;
+            current = next;
+        }
+        return previous;
     }
 
     public static void main(String[] args) {
-        assertEquals("n=0", 0L, solve(0), "Fibonacci(0)");
-        assertEquals("n=1", 1L, solve(1), "Fibonacci(1)");
-        assertEquals("n=10", 55L, solve(10), "Fibonacci(10)");
-        assertEquals("n=50", 12586269025L, solve(50), "Fibonacci(50)");
+        assertEquals(0L, solve(0), "Fibonacci(0)");
+        assertEquals(1L, solve(1), "Fibonacci(1)");
+        assertEquals(55L, solve(10), "Fibonacci(10)");
+        assertEquals(12586269025L, solve(50), "Fibonacci(50)");
         try {
             solve(-1);
             throw new AssertionError("negative index rejection: expected IllegalArgumentException, got no exception");

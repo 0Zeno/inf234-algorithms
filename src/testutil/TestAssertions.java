@@ -6,14 +6,6 @@ import java.util.Arrays;
 public final class TestAssertions {
     private TestAssertions() {}
 
-    public static void assertEquals(String input, Object expected, Object actual, String message) {
-        if (!Objects.equals(expected, actual))
-            throw new AssertionError(message + ": input=" + input +
-                    ", expected " + expected + ", got " + actual);
-        System.out.println("PASS: " + message +
-                ", input=" + input + ", output=" + actual);
-    }
-
     public static void assertEquals(Object expected, Object actual, String message) {
         if (!Objects.equals(expected, actual))
             throw new AssertionError(message + ": expected " + expected + ", got " + actual);
