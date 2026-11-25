@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+mkdir -p out/cli
+javac -d out/cli $(find src -name '*.java' -print)
+java -ea -cp out/cli InteractiveCli

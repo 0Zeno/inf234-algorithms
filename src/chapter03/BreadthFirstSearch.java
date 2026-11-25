@@ -50,6 +50,6 @@ public class BreadthFirstSearch {
     }
 
     private static void equals(String input, Object expected, Object actual) {
-        assertEquals(input, expected, actual, "breadth-first search order");
+        assertEquals(expected, actual, input + ": breadth-first search order");
     }
 }
