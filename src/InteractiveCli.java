@@ -7,11 +7,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class InteractiveCli {
     private record Algorithm(String name, Class<?> type) {}
@@ -68,7 +72,7 @@ public class InteractiveCli {
 
                 switch (choice) {
                     case "1" -> {
-                        Main.main(new String[0]);
+                        runFreshBuild("Main");
                         lastTest = ALGORITHMS.size() - 1;
                     }
                     case "2" -> {
@@ -112,18 +116,41 @@ public class InteractiveCli {
     }
 
     private static void runTest(Algorithm algorithm) {
-        System.out.println("\n=== " + algorithm.name() + " ===");
+        runFreshBuild("Main", "--test", algorithm.name(), algorithm.type().getName());
+    }
+
+    private static void runFreshBuild(String... applicationArgs) {
+        Path root = Path.of(System.getProperty("user.dir"));
+        Path sourceRoot = root.resolve("src");
+        Path outputDirectory = root.resolve("out/cli");
+        String java = Path.of(System.getProperty("java.home"), "bin", "java").toString();
+        String javac = Path.of(System.getProperty("java.home"), "bin", "javac").toString();
+
         try {
-            algorithm.type().getMethod("main", String[].class).invoke(null, (Object) new String[0]);
-            System.out.println("PASS");
-        } catch (InvocationTargetException exception) {
-            Throwable cause = exception.getCause();
-            if (cause instanceof UnsupportedOperationException)
-                System.out.println("TODO");
-            else
-                System.out.println("FAIL: " + cause);
-        } catch (ReflectiveOperationException exception) {
-            System.out.println("FAIL: " + exception);
+            Files.createDirectories(outputDirectory);
+            List<String> compileCommand = new ArrayList<>(List.of(javac, "-d", outputDirectory.toString()));
+            try (Stream<Path> sources = Files.walk(sourceRoot)) {
+                sources.filter(path -> path.toString().endsWith(".java"))
+                        .sorted()
+                        .forEach(path -> compileCommand.add(path.toString()));
+            }
+
+            Process compilation = new ProcessBuilder(compileCommand).directory(root.toFile())
+                    .inheritIO().start();
+            if (compilation.waitFor() != 0) {
+                System.out.println("Compilation failed; tests were not run.");
+                return;
+            }
+
+            List<String> testCommand = new ArrayList<>(List.of(
+                    java, "-ea", "-cp", outputDirectory.toString()));
+            testCommand.addAll(List.of(applicationArgs));
+            new ProcessBuilder(testCommand).directory(root.toFile()).inheritIO().start().waitFor();
+        } catch (IOException exception) {
+            System.out.println("Could not compile or run tests: " + exception.getMessage());
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            System.out.println("Interrupted while compiling or running tests.");
         }
     }
 

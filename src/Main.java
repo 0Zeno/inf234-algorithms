@@ -1,5 +1,14 @@
 public class Main {
     public static void main(String[] args) {
+        if (args.length == 3 && args[0].equals("--test")) {
+            try {
+                run(args[1], Class.forName(args[2]));
+            } catch (ClassNotFoundException exception) {
+                System.out.println("FAIL: " + exception);
+            }
+            return;
+        }
+
         run("Chapter 1: Stable matching", chapter01.StableMatching.class);
         run("Chapter 3: Breadth-first search", chapter03.BreadthFirstSearch.class);
         run("Chapter 3: Depth-first search", chapter03.DepthFirstSearch.class);
